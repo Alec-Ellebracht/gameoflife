@@ -5,12 +5,19 @@ import (
 	"math/rand"
 )
 
+var cols, rows int
 var nextGen [][]int
 
 func init() {
 
-	cols, rows := 145, 40
+	cols, rows = 145, 40
 	nextGen = makeGrid(cols, rows)
+}
+
+// Sets the size of the grid, the default is 145 cols and 40 rows
+func SetGridSize(customCols, customRows int) {
+
+	nextGen = makeGrid(customCols, customRows)
 }
 
 // Evolves the colony to the next generation
