@@ -24,7 +24,7 @@ func SetGridSize(customCols, customRows int) {
 func Evolve() string {
 	lastGen := nextGen
 	nextGen = next(lastGen)
-	return PrintGeneration(lastGen)
+	return printGeneration(lastGen)
 }
 
 func next(last [][]int) [][]int {
@@ -119,7 +119,7 @@ func makeGrid(cols int, rows int) [][]int {
 
 // prints the provided grid to the terminal
 // replacing 1's with * and 0's with a space
-func PrintGeneration(grid [][]int) string {
+func printGeneration(grid [][]int) string {
 
 	var gen string
 
