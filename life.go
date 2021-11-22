@@ -1,42 +1,58 @@
-package life
+package main
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
+	"os"
+	"strconv"
+	"time"
 )
 
-var cols, rows int
-var nextGen [][]int
+func main() {
 
-func init() {
+	// validate that we have 2 inputs
+	numInputs := len(os.Args)
+	if numInputs != 3 {
+		log.Fatal(fmt.Errorf("Must provide 2 integers"))
+	}
 
-	cols, rows = 145, 40
-	nextGen = makeGrid(cols, rows)
+	// get args from the command line
+	strCols, strRows := os.Args[1], os.Args[2]
+
+	// covert string args to nums
+	cols, err := strconv.Atoi(strCols)
+	if err != nil {
+		fmt.Printf("%T, %v\n", cols, cols)
+		log.Fatal(err)
+	}
+
+	rows, err := strconv.Atoi(strRows)
+	if err != nil {
+		fmt.Printf("%T, %v\n", rows, rows)
+		log.Fatal(err)
+	}
+
+	// cols, rows := 145, 61
+
+	grid := makeGrid(cols, rows)
+
+	for {
+		printGeneration(grid)
+		grid = nextGeneration(grid)
+	}
 }
 
-// Sets the size of the grid, the default is 145 cols and 40 rows
-func SetGridSize(customCols, customRows int) {
+func nextGeneration(grid [][]int) [][]int {
 
-	nextGen = makeGrid(customCols, customRows)
-}
+	next := makeDupe(grid)
 
-// Evolves the colony to the next generation
-func Evolve() string {
-	lastGen := nextGen
-	nextGen = next(lastGen)
-	return printGeneration(lastGen)
-}
-
-func next(last [][]int) [][]int {
-
-	next := makeDupe(last)
-
-	for i, row := range last {
+	for i, row := range grid {
 		for j, col := range row {
 
 			state := col
 
-			neighbors := countNeighbors(last, i, j)
+			neighbors := countNeighbors(grid, i, j)
 
 			// rules of life
 			if state == 1 && (neighbors == 2 || neighbors == 3) {
@@ -119,7 +135,7 @@ func makeGrid(cols int, rows int) [][]int {
 
 // prints the provided grid to the terminal
 // replacing 1's with * and 0's with a space
-func printGeneration(grid [][]int) string {
+func printGeneration(grid [][]int) {
 
 	var gen string
 
@@ -136,5 +152,8 @@ func printGeneration(grid [][]int) string {
 		gen += fmt.Sprintf("\n")
 	}
 
-	return gen
+	fmt.Print("\x0c")
+	fmt.Println(gen)
+
+	time.Sleep(time.Second / 30)
 }
