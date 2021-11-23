@@ -5,4 +5,4 @@ History: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 go run life.go 145 40
 ```
 
-![gol](https://user-images.githubusercontent.com/64043763/142944999-794a82ae-2b09-4e27-b137-12d9853be47d.gif)
+![conwaysgameoflife](https://user-images.githubusercontent.com/64043763/143094331-d1c368e2-3485-4ce2-92c9-3a17a9cd909b.gif)
